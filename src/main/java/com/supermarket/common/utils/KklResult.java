@@ -35,9 +35,17 @@ public class KklResult implements Serializable{
     public static KklResult ok(Object data) {
         return new KklResult(data);
     }
+    
+    public static KklResult repeat(Object data) {
+    	return build(000, "data repeat",data);
+    }
 
     public static KklResult ok() {
         return new KklResult(null);
+    }
+    
+    public static KklResult repeat() {
+    	return repeat(null);
     }
 
     public KklResult() {
