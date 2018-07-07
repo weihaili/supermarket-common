@@ -3,6 +3,7 @@ package com.supermarket.common.utils;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -108,6 +109,7 @@ public class KklResult implements Serializable{
             if (clazz == null) {
                 return MAPPER.readValue(jsonData, KklResult.class);
             }
+            MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             JsonNode jsonNode = MAPPER.readTree(jsonData);
             JsonNode data = jsonNode.get("data");
             Object obj = null;
@@ -132,6 +134,7 @@ public class KklResult implements Serializable{
      */
     public static KklResult format(String json) {
         try {
+        	MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return MAPPER.readValue(json, KklResult.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,6 +151,7 @@ public class KklResult implements Serializable{
      */
     public static KklResult formatToList(String jsonData, Class<?> clazz) {
         try {
+        	MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             JsonNode jsonNode = MAPPER.readTree(jsonData);
             JsonNode data = jsonNode.get("data");
             Object obj = null;

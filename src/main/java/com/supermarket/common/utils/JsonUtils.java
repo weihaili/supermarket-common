@@ -3,6 +3,7 @@ package com.supermarket.common.utils;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +42,7 @@ public class JsonUtils {
      */
     public static <T> T jsonToPojo(String jsonData, Class<T> beanType) {
         try {
+        	MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             T t = MAPPER.readValue(jsonData, beanType);
             return t;
         } catch (Exception e) {
@@ -58,6 +60,7 @@ public class JsonUtils {
      * @return
      */
     public static <T>List<T> jsonToList(String jsonData, Class<T> beanType) {
+    	MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     	JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
     	try {
     		List<T> list = MAPPER.readValue(jsonData, javaType);
